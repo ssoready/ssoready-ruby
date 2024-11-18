@@ -40,11 +40,11 @@ module SSOReady
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      scim_groups = parsed_json["scimGroups"]&.map do |v|
-        v = v.to_json
-        SSOReady::SCIMGroup.from_json(json_object: v)
+      scim_groups = parsed_json["scimGroups"]&.map do |item|
+        item = item.to_json
+        SSOReady::SCIMGroup.from_json(json_object: item)
       end
-      next_page_token = struct["nextPageToken"]
+      next_page_token = parsed_json["nextPageToken"]
       new(
         scim_groups: scim_groups,
         next_page_token: next_page_token,

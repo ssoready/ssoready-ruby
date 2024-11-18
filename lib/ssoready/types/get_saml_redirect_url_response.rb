@@ -32,7 +32,8 @@ module SSOReady
     # @return [SSOReady::GetSAMLRedirectURLResponse]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      redirect_url = struct["redirectUrl"]
+      parsed_json = JSON.parse(json_object)
+      redirect_url = parsed_json["redirectUrl"]
       new(redirect_url: redirect_url, additional_properties: struct)
     end
 

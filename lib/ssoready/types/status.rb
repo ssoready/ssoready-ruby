@@ -58,11 +58,11 @@ module SSOReady
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      code = struct["code"]
-      message = struct["message"]
-      details = parsed_json["details"]&.map do |v|
-        v = v.to_json
-        SSOReady::GoogleProtobufAny.from_json(json_object: v)
+      code = parsed_json["code"]
+      message = parsed_json["message"]
+      details = parsed_json["details"]&.map do |item|
+        item = item.to_json
+        SSOReady::GoogleProtobufAny.from_json(json_object: item)
       end
       new(
         code: code,

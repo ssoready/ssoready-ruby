@@ -16,17 +16,17 @@ module SSOReady
     # @return [SSOReady::Management::Client]
     attr_reader :management
 
-    # @param environment [SSOReady::Environment]
     # @param base_url [String]
+    # @param environment [SSOReady::Environment]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param api_key [String]
     # @return [SSOReady::Client]
-    def initialize(environment: SSOReady::Environment::DEFAULT, base_url: nil, max_retries: nil,
-                   timeout_in_seconds: nil, api_key: nil)
+    def initialize(base_url: nil, environment: SSOReady::Environment::DEFAULT, max_retries: nil,
+                   timeout_in_seconds: nil, api_key: ENV["SSOREADY_API_KEY"])
       @request_client = SSOReady::RequestClient.new(
-        environment: environment,
         base_url: base_url,
+        environment: environment,
         max_retries: max_retries,
         timeout_in_seconds: timeout_in_seconds,
         api_key: api_key
@@ -45,17 +45,17 @@ module SSOReady
     # @return [SSOReady::Management::AsyncClient]
     attr_reader :management
 
-    # @param environment [SSOReady::Environment]
     # @param base_url [String]
+    # @param environment [SSOReady::Environment]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param api_key [String]
     # @return [SSOReady::AsyncClient]
-    def initialize(environment: SSOReady::Environment::DEFAULT, base_url: nil, max_retries: nil,
-                   timeout_in_seconds: nil, api_key: nil)
+    def initialize(base_url: nil, environment: SSOReady::Environment::DEFAULT, max_retries: nil,
+                   timeout_in_seconds: nil, api_key: ENV["SSOREADY_API_KEY"])
       @async_request_client = SSOReady::AsyncRequestClient.new(
-        environment: environment,
         base_url: base_url,
+        environment: environment,
         max_retries: max_retries,
         timeout_in_seconds: timeout_in_seconds,
         api_key: api_key

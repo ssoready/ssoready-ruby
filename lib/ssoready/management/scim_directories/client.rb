@@ -29,8 +29,8 @@ module SSOReady
       # @return [SSOReady::ListSCIMDirectoriesResponse]
       # @example
       #  api = SSOReady::Client.new(
-      #    environment: SSOReady::Environment::DEFAULT,
       #    base_url: "https://api.example.com",
+      #    environment: SSOReady::Environment::DEFAULT,
       #    api_key: "YOUR_AUTH_TOKEN"
       #  )
       #  api.management.scim_directories.list_scim_directories
@@ -38,12 +38,19 @@ module SSOReady
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.api_key unless request_options&.api_key.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.params = {
             **(request_options&.additional_query_parameters || {}),
             "organizationId": organization_id,
             "pageToken": page_token
           }.compact
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/v1/scim-directories"
         end
         SSOReady::ListSCIMDirectoriesResponse.from_json(json_object: response.body)
@@ -61,8 +68,8 @@ module SSOReady
       # @return [SSOReady::CreateSCIMDirectoryResponse]
       # @example
       #  api = SSOReady::Client.new(
-      #    environment: SSOReady::Environment::DEFAULT,
       #    base_url: "https://api.example.com",
+      #    environment: SSOReady::Environment::DEFAULT,
       #    api_key: "YOUR_AUTH_TOKEN"
       #  )
       #  api.management.scim_directories.create_scim_directory(request: {  })
@@ -70,7 +77,14 @@ module SSOReady
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.api_key unless request_options&.api_key.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/v1/scim-directories"
         end
@@ -84,8 +98,8 @@ module SSOReady
       # @return [SSOReady::GetSCIMDirectoryResponse]
       # @example
       #  api = SSOReady::Client.new(
-      #    environment: SSOReady::Environment::DEFAULT,
       #    base_url: "https://api.example.com",
+      #    environment: SSOReady::Environment::DEFAULT,
       #    api_key: "YOUR_AUTH_TOKEN"
       #  )
       #  api.management.scim_directories.get_scim_directory(id: "id")
@@ -93,7 +107,17 @@ module SSOReady
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.api_key unless request_options&.api_key.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/v1/scim-directories/#{id}"
         end
         SSOReady::GetSCIMDirectoryResponse.from_json(json_object: response.body)
@@ -112,8 +136,8 @@ module SSOReady
       # @return [SSOReady::UpdateSCIMDirectoryResponse]
       # @example
       #  api = SSOReady::Client.new(
-      #    environment: SSOReady::Environment::DEFAULT,
       #    base_url: "https://api.example.com",
+      #    environment: SSOReady::Environment::DEFAULT,
       #    api_key: "YOUR_AUTH_TOKEN"
       #  )
       #  api.management.scim_directories.update_scim_directory(id: "id", request: {  })
@@ -121,7 +145,14 @@ module SSOReady
         response = @request_client.conn.patch do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.api_key unless request_options&.api_key.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/v1/scim-directories/#{id}"
         end
@@ -148,8 +179,8 @@ module SSOReady
       # @return [SSOReady::RotateSCIMDirectoryBearerTokenResponse]
       # @example
       #  api = SSOReady::Client.new(
-      #    environment: SSOReady::Environment::DEFAULT,
       #    base_url: "https://api.example.com",
+      #    environment: SSOReady::Environment::DEFAULT,
       #    api_key: "YOUR_AUTH_TOKEN"
       #  )
       #  api.management.scim_directories.rotate_scim_directory_bearer_token(id: "id")
@@ -157,7 +188,17 @@ module SSOReady
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.api_key unless request_options&.api_key.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/v1/scim-directories/#{id}/rotate-bearer-token"
         end
         SSOReady::RotateSCIMDirectoryBearerTokenResponse.from_json(json_object: response.body)
@@ -182,8 +223,8 @@ module SSOReady
       # @return [SSOReady::ListSCIMDirectoriesResponse]
       # @example
       #  api = SSOReady::Client.new(
-      #    environment: SSOReady::Environment::DEFAULT,
       #    base_url: "https://api.example.com",
+      #    environment: SSOReady::Environment::DEFAULT,
       #    api_key: "YOUR_AUTH_TOKEN"
       #  )
       #  api.management.scim_directories.list_scim_directories
@@ -192,12 +233,19 @@ module SSOReady
           response = @request_client.conn.get do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.api_key unless request_options&.api_key.nil?
-            req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.headers = {
+          **(req.headers || {}),
+          **@request_client.get_headers,
+          **(request_options&.additional_headers || {})
+            }.compact
             req.params = {
               **(request_options&.additional_query_parameters || {}),
               "organizationId": organization_id,
               "pageToken": page_token
             }.compact
+            unless request_options.nil? || request_options&.additional_body_parameters.nil?
+              req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+            end
             req.url "#{@request_client.get_url(request_options: request_options)}/v1/scim-directories"
           end
           SSOReady::ListSCIMDirectoriesResponse.from_json(json_object: response.body)
@@ -216,8 +264,8 @@ module SSOReady
       # @return [SSOReady::CreateSCIMDirectoryResponse]
       # @example
       #  api = SSOReady::Client.new(
-      #    environment: SSOReady::Environment::DEFAULT,
       #    base_url: "https://api.example.com",
+      #    environment: SSOReady::Environment::DEFAULT,
       #    api_key: "YOUR_AUTH_TOKEN"
       #  )
       #  api.management.scim_directories.create_scim_directory(request: {  })
@@ -226,7 +274,14 @@ module SSOReady
           response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.api_key unless request_options&.api_key.nil?
-            req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.headers = {
+          **(req.headers || {}),
+          **@request_client.get_headers,
+          **(request_options&.additional_headers || {})
+            }.compact
+            unless request_options.nil? || request_options&.additional_query_parameters.nil?
+              req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+            end
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/v1/scim-directories"
           end
@@ -241,8 +296,8 @@ module SSOReady
       # @return [SSOReady::GetSCIMDirectoryResponse]
       # @example
       #  api = SSOReady::Client.new(
-      #    environment: SSOReady::Environment::DEFAULT,
       #    base_url: "https://api.example.com",
+      #    environment: SSOReady::Environment::DEFAULT,
       #    api_key: "YOUR_AUTH_TOKEN"
       #  )
       #  api.management.scim_directories.get_scim_directory(id: "id")
@@ -251,7 +306,17 @@ module SSOReady
           response = @request_client.conn.get do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.api_key unless request_options&.api_key.nil?
-            req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.headers = {
+          **(req.headers || {}),
+          **@request_client.get_headers,
+          **(request_options&.additional_headers || {})
+            }.compact
+            unless request_options.nil? || request_options&.additional_query_parameters.nil?
+              req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+            end
+            unless request_options.nil? || request_options&.additional_body_parameters.nil?
+              req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+            end
             req.url "#{@request_client.get_url(request_options: request_options)}/v1/scim-directories/#{id}"
           end
           SSOReady::GetSCIMDirectoryResponse.from_json(json_object: response.body)
@@ -271,8 +336,8 @@ module SSOReady
       # @return [SSOReady::UpdateSCIMDirectoryResponse]
       # @example
       #  api = SSOReady::Client.new(
-      #    environment: SSOReady::Environment::DEFAULT,
       #    base_url: "https://api.example.com",
+      #    environment: SSOReady::Environment::DEFAULT,
       #    api_key: "YOUR_AUTH_TOKEN"
       #  )
       #  api.management.scim_directories.update_scim_directory(id: "id", request: {  })
@@ -281,7 +346,14 @@ module SSOReady
           response = @request_client.conn.patch do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.api_key unless request_options&.api_key.nil?
-            req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.headers = {
+          **(req.headers || {}),
+          **@request_client.get_headers,
+          **(request_options&.additional_headers || {})
+            }.compact
+            unless request_options.nil? || request_options&.additional_query_parameters.nil?
+              req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+            end
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/v1/scim-directories/#{id}"
           end
@@ -309,8 +381,8 @@ module SSOReady
       # @return [SSOReady::RotateSCIMDirectoryBearerTokenResponse]
       # @example
       #  api = SSOReady::Client.new(
-      #    environment: SSOReady::Environment::DEFAULT,
       #    base_url: "https://api.example.com",
+      #    environment: SSOReady::Environment::DEFAULT,
       #    api_key: "YOUR_AUTH_TOKEN"
       #  )
       #  api.management.scim_directories.rotate_scim_directory_bearer_token(id: "id")
@@ -319,7 +391,17 @@ module SSOReady
           response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.api_key unless request_options&.api_key.nil?
-            req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.headers = {
+          **(req.headers || {}),
+          **@request_client.get_headers,
+          **(request_options&.additional_headers || {})
+            }.compact
+            unless request_options.nil? || request_options&.additional_query_parameters.nil?
+              req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+            end
+            unless request_options.nil? || request_options&.additional_body_parameters.nil?
+              req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+            end
             req.url "#{@request_client.get_url(request_options: request_options)}/v1/scim-directories/#{id}/rotate-bearer-token"
           end
           SSOReady::RotateSCIMDirectoryBearerTokenResponse.from_json(json_object: response.body)

@@ -39,7 +39,8 @@ module SSOReady
     # @return [SSOReady::RotateSCIMDirectoryBearerTokenResponse]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      bearer_token = struct["bearerToken"]
+      parsed_json = JSON.parse(json_object)
+      bearer_token = parsed_json["bearerToken"]
       new(bearer_token: bearer_token, additional_properties: struct)
     end
 

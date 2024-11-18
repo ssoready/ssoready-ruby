@@ -40,11 +40,11 @@ module SSOReady
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      saml_connections = parsed_json["samlConnections"]&.map do |v|
-        v = v.to_json
-        SSOReady::SAMLConnection.from_json(json_object: v)
+      saml_connections = parsed_json["samlConnections"]&.map do |item|
+        item = item.to_json
+        SSOReady::SAMLConnection.from_json(json_object: item)
       end
-      next_page_token = struct["nextPageToken"]
+      next_page_token = parsed_json["nextPageToken"]
       new(
         saml_connections: saml_connections,
         next_page_token: next_page_token,

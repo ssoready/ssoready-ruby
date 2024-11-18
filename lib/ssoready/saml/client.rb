@@ -23,8 +23,8 @@ module SSOReady
     # @return [SSOReady::RedeemSAMLAccessCodeResponse]
     # @example
     #  api = SSOReady::Client.new(
-    #    environment: SSOReady::Environment::DEFAULT,
     #    base_url: "https://api.example.com",
+    #    environment: SSOReady::Environment::DEFAULT,
     #    api_key: "YOUR_AUTH_TOKEN"
     #  )
     #  api.saml.redeem_saml_access_code(saml_access_code: "saml_access_code_...")
@@ -32,7 +32,14 @@ module SSOReady
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.api_key unless request_options&.api_key.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request_options&.additional_body_parameters || {}), samlAccessCode: saml_access_code }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/v1/saml/redeem"
       end
@@ -61,8 +68,8 @@ module SSOReady
     # @return [SSOReady::GetSAMLRedirectURLResponse]
     # @example
     #  api = SSOReady::Client.new(
-    #    environment: SSOReady::Environment::DEFAULT,
     #    base_url: "https://api.example.com",
+    #    environment: SSOReady::Environment::DEFAULT,
     #    api_key: "YOUR_AUTH_TOKEN"
     #  )
     #  api.saml.get_saml_redirect_url(organization_external_id: "my_custom_external_id")
@@ -71,7 +78,14 @@ module SSOReady
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.api_key unless request_options&.api_key.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = {
           **(request_options&.additional_body_parameters || {}),
           samlConnectionId: saml_connection_id,
@@ -102,8 +116,8 @@ module SSOReady
     # @return [SSOReady::RedeemSAMLAccessCodeResponse]
     # @example
     #  api = SSOReady::Client.new(
-    #    environment: SSOReady::Environment::DEFAULT,
     #    base_url: "https://api.example.com",
+    #    environment: SSOReady::Environment::DEFAULT,
     #    api_key: "YOUR_AUTH_TOKEN"
     #  )
     #  api.saml.redeem_saml_access_code(saml_access_code: "saml_access_code_...")
@@ -112,7 +126,14 @@ module SSOReady
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.api_key unless request_options&.api_key.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request_options&.additional_body_parameters || {}), samlAccessCode: saml_access_code }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/v1/saml/redeem"
         end
@@ -142,8 +163,8 @@ module SSOReady
     # @return [SSOReady::GetSAMLRedirectURLResponse]
     # @example
     #  api = SSOReady::Client.new(
-    #    environment: SSOReady::Environment::DEFAULT,
     #    base_url: "https://api.example.com",
+    #    environment: SSOReady::Environment::DEFAULT,
     #    api_key: "YOUR_AUTH_TOKEN"
     #  )
     #  api.saml.get_saml_redirect_url(organization_external_id: "my_custom_external_id")
@@ -153,7 +174,14 @@ module SSOReady
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.api_key unless request_options&.api_key.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = {
             **(request_options&.additional_body_parameters || {}),
             samlConnectionId: saml_connection_id,

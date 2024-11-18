@@ -4,7 +4,7 @@ require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
   spec.name = "ssoready"
-  spec.version = "0.1.0"
+  spec.version = "1.0.0"
   spec.authors = SSOReady::Gemconfig::AUTHORS
   spec.email = SSOReady::Gemconfig::EMAIL
   spec.summary = SSOReady::Gemconfig::SUMMARY

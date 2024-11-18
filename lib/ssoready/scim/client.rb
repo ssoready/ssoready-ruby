@@ -36,8 +36,8 @@ module SSOReady
     # @return [SSOReady::ListSCIMGroupsResponse]
     # @example
     #  api = SSOReady::Client.new(
-    #    environment: SSOReady::Environment::DEFAULT,
     #    base_url: "https://api.example.com",
+    #    environment: SSOReady::Environment::DEFAULT,
     #    api_key: "YOUR_AUTH_TOKEN"
     #  )
     #  api.scim.list_scim_groups(organization_external_id: "my_custom_external_id")
@@ -46,7 +46,11 @@ module SSOReady
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.api_key unless request_options&.api_key.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.params = {
           **(request_options&.additional_query_parameters || {}),
           "scimDirectoryId": scim_directory_id,
@@ -54,6 +58,9 @@ module SSOReady
           "organizationExternalId": organization_external_id,
           "pageToken": page_token
         }.compact
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
         req.url "#{@request_client.get_url(request_options: request_options)}/v1/scim/groups"
       end
       SSOReady::ListSCIMGroupsResponse.from_json(json_object: response.body)
@@ -66,8 +73,8 @@ module SSOReady
     # @return [SSOReady::GetSCIMGroupResponse]
     # @example
     #  api = SSOReady::Client.new(
-    #    environment: SSOReady::Environment::DEFAULT,
     #    base_url: "https://api.example.com",
+    #    environment: SSOReady::Environment::DEFAULT,
     #    api_key: "YOUR_AUTH_TOKEN"
     #  )
     #  api.scim.get_scim_group(id: "scim_group_...")
@@ -75,7 +82,17 @@ module SSOReady
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.api_key unless request_options&.api_key.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
         req.url "#{@request_client.get_url(request_options: request_options)}/v1/scim/groups/#{id}"
       end
       SSOReady::GetSCIMGroupResponse.from_json(json_object: response.body)
@@ -100,8 +117,8 @@ module SSOReady
     # @return [SSOReady::ListSCIMUsersResponse]
     # @example
     #  api = SSOReady::Client.new(
-    #    environment: SSOReady::Environment::DEFAULT,
     #    base_url: "https://api.example.com",
+    #    environment: SSOReady::Environment::DEFAULT,
     #    api_key: "YOUR_AUTH_TOKEN"
     #  )
     #  api.scim.list_scim_users(organization_external_id: "my_custom_external_id")
@@ -110,7 +127,11 @@ module SSOReady
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.api_key unless request_options&.api_key.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.params = {
           **(request_options&.additional_query_parameters || {}),
           "scimDirectoryId": scim_directory_id,
@@ -119,6 +140,9 @@ module SSOReady
           "scimGroupId": scim_group_id,
           "pageToken": page_token
         }.compact
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
         req.url "#{@request_client.get_url(request_options: request_options)}/v1/scim/users"
       end
       SSOReady::ListSCIMUsersResponse.from_json(json_object: response.body)
@@ -131,8 +155,8 @@ module SSOReady
     # @return [SSOReady::GetSCIMUserResponse]
     # @example
     #  api = SSOReady::Client.new(
-    #    environment: SSOReady::Environment::DEFAULT,
     #    base_url: "https://api.example.com",
+    #    environment: SSOReady::Environment::DEFAULT,
     #    api_key: "YOUR_AUTH_TOKEN"
     #  )
     #  api.scim.get_scim_user(id: "scim_user_...")
@@ -140,7 +164,17 @@ module SSOReady
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.api_key unless request_options&.api_key.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
         req.url "#{@request_client.get_url(request_options: request_options)}/v1/scim/users/#{id}"
       end
       SSOReady::GetSCIMUserResponse.from_json(json_object: response.body)
@@ -175,8 +209,8 @@ module SSOReady
     # @return [SSOReady::ListSCIMGroupsResponse]
     # @example
     #  api = SSOReady::Client.new(
-    #    environment: SSOReady::Environment::DEFAULT,
     #    base_url: "https://api.example.com",
+    #    environment: SSOReady::Environment::DEFAULT,
     #    api_key: "YOUR_AUTH_TOKEN"
     #  )
     #  api.scim.list_scim_groups(organization_external_id: "my_custom_external_id")
@@ -186,7 +220,11 @@ module SSOReady
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.api_key unless request_options&.api_key.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.params = {
             **(request_options&.additional_query_parameters || {}),
             "scimDirectoryId": scim_directory_id,
@@ -194,6 +232,9 @@ module SSOReady
             "organizationExternalId": organization_external_id,
             "pageToken": page_token
           }.compact
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/v1/scim/groups"
         end
         SSOReady::ListSCIMGroupsResponse.from_json(json_object: response.body)
@@ -207,8 +248,8 @@ module SSOReady
     # @return [SSOReady::GetSCIMGroupResponse]
     # @example
     #  api = SSOReady::Client.new(
-    #    environment: SSOReady::Environment::DEFAULT,
     #    base_url: "https://api.example.com",
+    #    environment: SSOReady::Environment::DEFAULT,
     #    api_key: "YOUR_AUTH_TOKEN"
     #  )
     #  api.scim.get_scim_group(id: "scim_group_...")
@@ -217,7 +258,17 @@ module SSOReady
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.api_key unless request_options&.api_key.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/v1/scim/groups/#{id}"
         end
         SSOReady::GetSCIMGroupResponse.from_json(json_object: response.body)
@@ -243,8 +294,8 @@ module SSOReady
     # @return [SSOReady::ListSCIMUsersResponse]
     # @example
     #  api = SSOReady::Client.new(
-    #    environment: SSOReady::Environment::DEFAULT,
     #    base_url: "https://api.example.com",
+    #    environment: SSOReady::Environment::DEFAULT,
     #    api_key: "YOUR_AUTH_TOKEN"
     #  )
     #  api.scim.list_scim_users(organization_external_id: "my_custom_external_id")
@@ -254,7 +305,11 @@ module SSOReady
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.api_key unless request_options&.api_key.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.params = {
             **(request_options&.additional_query_parameters || {}),
             "scimDirectoryId": scim_directory_id,
@@ -263,6 +318,9 @@ module SSOReady
             "scimGroupId": scim_group_id,
             "pageToken": page_token
           }.compact
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/v1/scim/users"
         end
         SSOReady::ListSCIMUsersResponse.from_json(json_object: response.body)
@@ -276,8 +334,8 @@ module SSOReady
     # @return [SSOReady::GetSCIMUserResponse]
     # @example
     #  api = SSOReady::Client.new(
-    #    environment: SSOReady::Environment::DEFAULT,
     #    base_url: "https://api.example.com",
+    #    environment: SSOReady::Environment::DEFAULT,
     #    api_key: "YOUR_AUTH_TOKEN"
     #  )
     #  api.scim.get_scim_user(id: "scim_user_...")
@@ -286,7 +344,17 @@ module SSOReady
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.api_key unless request_options&.api_key.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/v1/scim/users/#{id}"
         end
         SSOReady::GetSCIMUserResponse.from_json(json_object: response.body)

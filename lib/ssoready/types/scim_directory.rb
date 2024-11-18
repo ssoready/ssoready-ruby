@@ -65,11 +65,12 @@ module SSOReady
     # @return [SSOReady::SCIMDirectory]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      id = struct["id"]
-      organization_id = struct["organizationId"]
-      primary = struct["primary"]
-      scim_base_url = struct["scimBaseUrl"]
-      has_client_bearer_token = struct["hasClientBearerToken"]
+      parsed_json = JSON.parse(json_object)
+      id = parsed_json["id"]
+      organization_id = parsed_json["organizationId"]
+      primary = parsed_json["primary"]
+      scim_base_url = parsed_json["scimBaseUrl"]
+      has_client_bearer_token = parsed_json["hasClientBearerToken"]
       new(
         id: id,
         organization_id: organization_id,

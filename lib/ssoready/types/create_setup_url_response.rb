@@ -38,7 +38,8 @@ module SSOReady
     # @return [SSOReady::CreateSetupURLResponse]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      url = struct["url"]
+      parsed_json = JSON.parse(json_object)
+      url = parsed_json["url"]
       new(url: url, additional_properties: struct)
     end
 

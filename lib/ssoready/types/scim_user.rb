@@ -63,11 +63,12 @@ module SSOReady
     # @return [SSOReady::SCIMUser]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      id = struct["id"]
-      scim_directory_id = struct["scimDirectoryId"]
-      email = struct["email"]
-      deleted = struct["deleted"]
-      attributes = struct["attributes"]
+      parsed_json = JSON.parse(json_object)
+      id = parsed_json["id"]
+      scim_directory_id = parsed_json["scimDirectoryId"]
+      email = parsed_json["email"]
+      deleted = parsed_json["deleted"]
+      attributes = parsed_json["attributes"]
       new(
         id: id,
         scim_directory_id: scim_directory_id,

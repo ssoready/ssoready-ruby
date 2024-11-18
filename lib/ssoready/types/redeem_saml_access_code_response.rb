@@ -84,12 +84,13 @@ module SSOReady
     # @return [SSOReady::RedeemSAMLAccessCodeResponse]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      email = struct["email"]
-      state = struct["state"]
-      attributes = struct["attributes"]
-      organization_id = struct["organizationId"]
-      organization_external_id = struct["organizationExternalId"]
-      saml_flow_id = struct["samlFlowId"]
+      parsed_json = JSON.parse(json_object)
+      email = parsed_json["email"]
+      state = parsed_json["state"]
+      attributes = parsed_json["attributes"]
+      organization_id = parsed_json["organizationId"]
+      organization_external_id = parsed_json["organizationExternalId"]
+      saml_flow_id = parsed_json["samlFlowId"]
       new(
         email: email,
         state: state,

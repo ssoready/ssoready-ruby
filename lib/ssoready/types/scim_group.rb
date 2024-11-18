@@ -75,11 +75,12 @@ module SSOReady
     # @return [SSOReady::SCIMGroup]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      id = struct["id"]
-      scim_directory_id = struct["scimDirectoryId"]
-      display_name = struct["displayName"]
-      deleted = struct["deleted"]
-      attributes = struct["attributes"]
+      parsed_json = JSON.parse(json_object)
+      id = parsed_json["id"]
+      scim_directory_id = parsed_json["scimDirectoryId"]
+      display_name = parsed_json["displayName"]
+      deleted = parsed_json["deleted"]
+      attributes = parsed_json["attributes"]
       new(
         id: id,
         scim_directory_id: scim_directory_id,

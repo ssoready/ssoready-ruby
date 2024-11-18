@@ -73,11 +73,12 @@ module SSOReady
     # @return [SSOReady::Organization]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      id = struct["id"]
-      environment_id = struct["environmentId"]
-      display_name = struct["displayName"]
-      external_id = struct["externalId"]
-      domains = struct["domains"]
+      parsed_json = JSON.parse(json_object)
+      id = parsed_json["id"]
+      environment_id = parsed_json["environmentId"]
+      display_name = parsed_json["displayName"]
+      external_id = parsed_json["externalId"]
+      domains = parsed_json["domains"]
       new(
         id: id,
         environment_id: environment_id,

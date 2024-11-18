@@ -96,14 +96,15 @@ module SSOReady
     # @return [SSOReady::SAMLConnection]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      id = struct["id"]
-      organization_id = struct["organizationId"]
-      primary = struct["primary"]
-      idp_redirect_url = struct["idpRedirectUrl"]
-      idp_certificate = struct["idpCertificate"]
-      idp_entity_id = struct["idpEntityId"]
-      sp_entity_id = struct["spEntityId"]
-      sp_acs_url = struct["spAcsUrl"]
+      parsed_json = JSON.parse(json_object)
+      id = parsed_json["id"]
+      organization_id = parsed_json["organizationId"]
+      primary = parsed_json["primary"]
+      idp_redirect_url = parsed_json["idpRedirectUrl"]
+      idp_certificate = parsed_json["idpCertificate"]
+      idp_entity_id = parsed_json["idpEntityId"]
+      sp_entity_id = parsed_json["spEntityId"]
+      sp_acs_url = parsed_json["spAcsUrl"]
       new(
         id: id,
         organization_id: organization_id,

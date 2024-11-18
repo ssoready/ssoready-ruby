@@ -34,7 +34,8 @@ module SSOReady
     # @return [SSOReady::GoogleProtobufAny]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      type = struct["@type"]
+      parsed_json = JSON.parse(json_object)
+      type = parsed_json["@type"]
       new(type: type, additional_properties: struct)
     end
 

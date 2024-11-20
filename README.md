@@ -11,6 +11,7 @@ can use SSOReady to add SAML and SCIM support to your product this afternoon.
 
 For example applications built using SSOReady-Ruby, check out:
 
+- [SSOReady Example App: Ruby + Rails with SAML](https://github.com/ssoready/ssoready-example-app-ruby-rails-saml)
 - [SSOReady Example App: Ruby + Sinatra with SAML](https://github.com/ssoready/ssoready-example-app-ruby-sinatra-saml)
 
 ## Installation
